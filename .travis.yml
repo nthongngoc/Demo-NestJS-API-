@@ -13,4 +13,4 @@ jobs:
     - npm run build
     - npm run start:prod
   after_script:
-    - kill -9 PID
+    - exit 0
