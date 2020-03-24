@@ -12,4 +12,3 @@ jobs:
     - npm run lint
     - npm run build
     - npm run start:prod
-    - exit 0
