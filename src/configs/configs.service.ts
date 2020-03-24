@@ -33,7 +33,7 @@ export class ConfigsService {
   private validateInput(envConfig: EnvConfig): EnvConfig {
     const envVarsSchema: Joi.ObjectSchema = Joi.object({
       NODE_ENV: Joi.string()
-        .valid(['development', 'production', 'local'])
+        .valid('development', 'production', 'local')
         .default('development'),
       HOST: Joi.string().required(),
       PORT: Joi.number().required(),
@@ -49,9 +49,8 @@ export class ConfigsService {
       FIREBASE_STORAGE_BUCKET: Joi.string().required()
     })
 
-    const { error, value: validatedEnvConfig } = Joi.validate(
-      envConfig,
-      envVarsSchema,
+    const { error, value: validatedEnvConfig } = envVarsSchema.validate(
+      envConfig
     )
 
     if (error) {
