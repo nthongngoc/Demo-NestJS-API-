@@ -70,9 +70,12 @@ export class FilesController {
   @UseInterceptors(FileInterceptor('file'))
   async createOne(@Request() { user }, @UploadedFile() file, @Body() createFileDto: CreateFileDto, @Param() { folderID }): Promise<boolean> {
     try {
-      if (!file.originalname.toLowerCase().match(RegExp(`\.(${FileType.DOC}|${FileType.JPEG}|${FileType.PDF}|${FileType.PNG}|${FileType.SVG}|${FileType.XLSX})$`))) {
+      const a = file.originalname.toLowerCase().match(RegExp(`\.(${FileType.DOC}|${FileType.JPEG}|${FileType.PDF}|${FileType.PNG}|${FileType.SVG}|${FileType.XLSX})$`))
+      if (!a) {
         throw new Error('This file\'s type is not supported!');
       }
+      console.log(a);
+
 
       const fileID = uuidv4()
 

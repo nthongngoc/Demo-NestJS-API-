@@ -9,17 +9,25 @@ export class FirebaseService {
     private readonly configsService: ConfigsService
   ) {
     initializeApp({
+
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       credential: credential.cert(require(configsService.firebaseServiceAccountPath)),
       storageBucket: `${configsService.firebaseStorageBucket}.appspot.com/`
     })
   }
 
+
+
   async uploadFileToFirebase({fileID, folderID, fileContent}: UploadFileService): Promise<string> {
     try {
+      console.log("-------------",this.configsService.firebaseServiceAccountPath);
       const mimeType = fileContent.originalname.split(".");
       const fileName = `${folderID}-${fileID}.${mimeType[mimeType.length-1].toLowerCase()}`
+      console.log(fileName);
+
       const file = storage().bucket().file(fileName)
+      console.log(file);
+
       const url = `https://storage.googleapis.com/${this.configsService.firebaseStorageBucket}/${fileName}`;
 
       const blobStream = file.createWriteStream({
